@@ -1,0 +1,18 @@
+
+<div id="menu" data-ng-controller="MenuIndexController">
+
+  <ul class="nav nav-pills nav-stacked">
+    <li>
+      <h5>GeoJSON Layers:</h5>
+      <div class="btn-group-vertical">
+        <button
+          data-ng-repeat="(key, value) in layers"
+          type="button"
+          class="btn btn-default"
+          data-ng-class="{disabled: value==null, active: value}" 
+          data-ng-click="toggle( key );">{{key}}</button>
+      </div>
+    </li>
+  </ul>
+
+</div>
