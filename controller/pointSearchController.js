@@ -24,9 +24,15 @@ module.exports = function( req, res, next ){
             type: 'Feature',
             id: row._id,
             properties: {
-              name: row._source.suggest
+              name: row._source.name
             },
-            geometry: row._source.boundaries
+            geometry: {
+              type: 'Point',
+              coordinates: [
+                row._source.center_point.lon,
+                row._source.center_point.lat
+              ]
+            }
           }
 
         })
@@ -60,20 +66,13 @@ function buildSearchCommand( req )
   return {
     query: { "match_all": {} },
     filter : {
-      and: [{
-          'geo_shape' : {
-            'boundaries' : {
-              'shape': {
-                'type': 'envelope',
-                'coordinates': [
-                  [ bbox[0], bbox[3] ],
-                  [ bbox[2], bbox[1] ]
-                ]
-              }
-            },
-            '_cache' : true
-          }
-      }]
+      'geo_bounding_box': {
+        'center_point': {
+          'top_left': [ bbox[0], bbox[3] ],
+          'bottom_right': [ bbox[2], bbox[1] ]
+        },
+        '_cache' : true
+      }
     },
     size: 1000
   }

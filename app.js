@@ -36,6 +36,10 @@ app.get( '/', function( req, res ){ res.render( 'index' ); });
 var shapeSearchController = require('./controller/shapeSearchController');
 app.get( '/shapes/:type/:z/:y/:x', shapeSearchController );
 
+// Point Search
+var pointSearchController = require('./controller/pointSearchController');
+app.get( '/points/:type/:z/:y/:x', pointSearchController );
+
 // We're up & running!
 app.listen( app.get( 'port' ) );
 console.log( "Server running in env %s on port %d", app.get( 'env' ), app.get( 'port' ) );
