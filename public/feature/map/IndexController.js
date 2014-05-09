@@ -66,7 +66,7 @@ app.controller( 'MapIndexController', function( $scope, PeliasGeoJsonLayerManage
   // Locality
   layerManager.register( 'quattroshapes.locality',
     '/shapes/locality/{z}/{y}/{x}',
-    { color: '#D00' }
+    { color: '#00D' }
   ).enable( 'quattroshapes.locality' );
 
   // Locality
