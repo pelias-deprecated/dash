@@ -12,15 +12,47 @@
 }
 
 #header img.logo {
-  float: left;
+
 }
 
 #header form {
-  float: left;
   margin: 0;
   margin-left: 20px;
 }
 
 #header form input {
+  position: fixed;
+  left: 220px;
+  top: 12px;
   width: 500px;
+}
+
+#header #results {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  position: fixed;
+  left: 220px;
+  top: 60px;
+  width: 500px;
+  background-color: #fff;
+}
+
+#header #results li {
+  margin: 0;
+  padding: 0;
+}
+
+#header #results li a {
+  display: block;
+  margin: 0;
+  padding: 0 10px;
+  line-height: 40px;
+  border-top: solid 1px #ddd;
+}
+
+#header #results li a:hover {
+  text-decoration: none;
+  background-color: #efefef;
 }
