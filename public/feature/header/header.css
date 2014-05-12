@@ -1,0 +1,26 @@
+
+#header {
+  height: 60px;
+  line-height: 50px;
+  z-index: 1001;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  line-height: 55px;
+  background: #fff;
+}
+
+#header img.logo {
+  float: left;
+}
+
+#header form {
+  float: left;
+  margin: 0;
+  margin-left: 20px;
+}
+
+#header form input {
+  width: 500px;
+}

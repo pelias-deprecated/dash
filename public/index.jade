@@ -56,6 +56,10 @@ html(data-ng-app="pelias")
     script(src="/feature/menu/IndexController.js")
     link(rel="stylesheet", href="/feature/menu/menu.css")
 
+    // Header
+    script(src="/feature/header/IndexController.js")
+    link(rel="stylesheet", href="/feature/header/header.css")
+
     // Map
     script(src="/feature/map/IndexController.js")
     script(src="/feature/map/init.js")
@@ -65,6 +69,8 @@ html(data-ng-app="pelias")
 
   // Pass View & Session Variables from Server Side to Angular
   body(ng-init="user=#{JSON.stringify(user)}; config=#{JSON.stringify(config)};")
+
+    .header-container(data-ng-include="'/feature/header/header.html'")
 
     .container
       .menu-container(data-ng-include="'/feature/menu/menu.html'")
