@@ -20,7 +20,7 @@ app.controller( 'HeaderIndexController', function( $scope, $http ) {
   $scope.$watch( 'search', function( input ){
 
     $http({
-      url: 'http://localhost:9200/pelias/_suggest',
+      url: 'http://' + document.domain + ':9200/pelias/_suggest',
       method: 'POST',
       data: {
         'locality-suggest' : {
