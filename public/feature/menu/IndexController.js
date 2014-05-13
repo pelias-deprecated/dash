@@ -5,6 +5,8 @@ app.controller( 'MenuIndexController', function( $rootScope, $scope, PeliasGeoJs
     $scope.layers = layerData;
   });
 
+  $rootScope.$emit( 'peliasLayerUpdateNow' );
+
   $scope.toggle = function( layerName ){
     PeliasGeoJsonLayerManager.toggle( layerName );
   }

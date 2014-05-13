@@ -77,6 +77,9 @@ app.service( 'PeliasGeoJsonLayerManager', function( $rootScope, PeliasGeoJsonLay
       layers = {},
       enabled = {};
 
+  $rootScope.$on( 'peliasLayerUpdateNow', function( ev ){
+    $rootScope.$emit( 'peliasLayerUpdate', enabled );
+  });
   
   var bind = function( leaftetLap ){
     map = leaftetLap;
