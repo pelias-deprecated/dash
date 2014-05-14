@@ -7,45 +7,45 @@ L.TileLayer.Ajax = L.TileLayer.extend({
         this._loadTile(tile, tilePoint);
     },
     // XMLHttpRequest handler; closure over the XHR object, the layer, and the tile
-    // _xhrHandler: function (req, layer, tile, tilePoint) {
-    //     return function () {
-    //         if (req.readyState !== 4) {
-    //             return;
-    //         }
-    //         var s = req.status;
-    //         if ((s >= 200 && s < 300) || s === 304) {
-    //             tile.datum = JSON.parse(req.responseText);
-    //             layer._tileLoaded(tile, tilePoint);
-    //         } else {
-    //             layer._tileLoaded(tile, tilePoint);
-    //         }
-    //     };
-    // },
-    //Load the requested tile via AJAX
-    // _loadTile: function (tile, tilePoint) {
-    //     this._adjustTilePoint(tilePoint);
-    //     var layer = this;
-    //     var req = new XMLHttpRequest();
-    //     this._requests.push(req);
-    //     req.onreadystatechange = this._xhrHandler(req, layer, tile, tilePoint);
-    //     req.open('GET', this.getTileUrl(tilePoint), true);
-    //     req.send();
-    // },
-    _loadTile: function (tile, tilePoint) {
-        var layer = this;
-        this._adjustTilePoint(tilePoint);
-        $.ajax({
-            url: this.getTileUrl(tilePoint),
-            dataType: 'jsonp',
-            success: function(geojson) {
-                tile.datum = geojson;
-                layer._tileLoaded( tile, tilePoint );
-            },
-            error: function() {
-                layer._tileLoaded( tile, tilePoint );
+    _xhrHandler: function (req, layer, tile, tilePoint) {
+        return function () {
+            if (req.readyState !== 4) {
+                return;
             }
-        });
+            var s = req.status;
+            if ((s >= 200 && s < 300) || s === 304) {
+                tile.datum = JSON.parse(req.responseText);
+                layer._tileLoaded(tile, tilePoint);
+            } else {
+                layer._tileLoaded(tile, tilePoint);
+            }
+        };
     },
+    // Load the requested tile via AJAX
+    _loadTile: function (tile, tilePoint) {
+        this._adjustTilePoint(tilePoint);
+        var layer = this;
+        var req = new XMLHttpRequest();
+        this._requests.push(req);
+        req.onreadystatechange = this._xhrHandler(req, layer, tile, tilePoint);
+        req.open('GET', this.getTileUrl(tilePoint), true);
+        req.send();
+    },
+    // _loadTile: function (tile, tilePoint) {
+    //     var layer = this;
+    //     this._adjustTilePoint(tilePoint);
+    //     $.ajax({
+    //         url: this.getTileUrl(tilePoint),
+    //         dataType: 'jsonp',
+    //         success: function(geojson) {
+    //             tile.datum = geojson;
+    //             layer._tileLoaded( tile, tilePoint );
+    //         },
+    //         error: function() {
+    //             layer._tileLoaded( tile, tilePoint );
+    //         }
+    //     });
+    // },
     _reset: function () {
         L.TileLayer.prototype._reset.apply(this, arguments);
         for (var i in this._requests) {

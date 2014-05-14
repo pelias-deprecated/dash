@@ -43,9 +43,9 @@ app.controller( 'MapIndexController', function( $scope, PeliasGeoJsonLayerManage
   var hostMask = 'http://:domain::port:/:st:/:est:/{z}/{y}/{x}';
    
   // Use subdomains if configured at the DNS level
-  if( document.domain === 'pelias.wiz.co.nz' ){
-    hostMask = 'http://{s}.:domain::port:/:st:/:est:/{z}/{y}/{x}';
-  }
+  // if( document.domain === 'pelias.wiz.co.nz' ){
+  //   hostMask = 'http://{s}.:domain::port:/:st:/:est:/{z}/{y}/{x}';
+  // }
 
   var hostString = hostMask.replace( ':domain:', document.domain )
                            .replace( ':port:', location.port ? ':' + location.port : '' );
