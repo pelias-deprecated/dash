@@ -37,47 +37,57 @@ app.controller( 'MapIndexController', function( $scope, PeliasGeoJsonLayerManage
 
   // Configure map
   map.addLayer( L.tileLayer.provider( 'MapBox.missinglink.i3ook7ke' ) );
-  var layerManager = PeliasGeoJsonLayerManager.bind( map )
+  var layerManager = PeliasGeoJsonLayerManager.bind( map );
+
+  // Host String
+  var hostMask = 'http://:domain::port:/:searchtype:/:estype:/{z}/{y}/{x}';
+  if( document.domain === 'pelias.wiz.co.nz' ){
+    // Use subdomains if configured at the DNS level
+    hostMask = 'http://{s}.:domain::port:/:searchtype:/:estype:/{z}/{y}/{x}';
+  }
+
+  var hostString = hostMask.replace( ':domain:', document.domain )
+                           .replace( ':port:', location.port ? ':' + location.port : '' );
   
   // Geonames
   layerManager.register( 'geonames.all',
-    '/points/geoname/{z}/{y}/{x}',
+    hostString.replace(':searchtype:','points').replace(':estype:','geoname'),
     { color: '#D00' }
   ).disable( 'geonames.all' );
 
   // Admin0
   layerManager.register( 'quattroshapes.admin0',
-    '/shapes/admin0/{z}/{y}/{x}',
+    hostString.replace(':searchtype:','shapes').replace(':estype:','admin0'),
     { color: '#FF00FF' }
   ).enable( 'quattroshapes.admin0' );
 
   // Admin1
   layerManager.register( 'quattroshapes.admin1',
-    '/shapes/admin1/{z}/{y}/{x}',
+    hostString.replace(':searchtype:','shapes').replace(':estype:','admin1'),
     { color: '#00FFFF' }
   ).enable( 'quattroshapes.admin1' );
 
   // Admin2
   layerManager.register( 'quattroshapes.admin2',
-    '/shapes/admin2/{z}/{y}/{x}',
+    hostString.replace(':searchtype:','shapes').replace(':estype:','admin2'),
     { color: '#FFFF00' }
   ).enable( 'quattroshapes.admin2' );
 
   // Local Admin
   layerManager.register( 'quattroshapes.localadmin',
-    '/shapes/local_admin/{z}/{y}/{x}',
+    hostString.replace(':searchtype:','shapes').replace(':estype:','local_admin'),
     { color: '#0D0' }
   ).enable( 'quattroshapes.localadmin' );
 
   // Locality
   layerManager.register( 'quattroshapes.locality',
-    '/shapes/locality/{z}/{y}/{x}',
+    hostString.replace(':searchtype:','shapes').replace(':estype:','locality'),
     { color: '#00D' }
   ).enable( 'quattroshapes.locality' );
 
   // Neighborhood
   layerManager.register( 'quattroshapes.neighborhood',
-    '/shapes/neighborhood/{z}/{y}/{x}',
+    hostString.replace(':searchtype:','shapes').replace(':estype:','neighborhood'),
     { color: '#D00' }
   ).enable( 'quattroshapes.neighborhood' );
 
