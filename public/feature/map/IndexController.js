@@ -41,13 +41,11 @@ app.controller( 'MapIndexController', function( $scope, PeliasGeoJsonLayerManage
 
   // Host String
   var hostMask = 'http://:domain::port:/:st:/:est:/{z}/{y}/{x}';
-  
-  // NOTE: this doesn't work as-of-yet due to cross-origin issues.
-  // Can be fixed by implimenting JSONP 
-  // if( document.domain === 'pelias.wiz.co.nz' ){
-  //   // Use subdomains if configured at the DNS level
-  //   hostMask = 'http://{s}.:domain::port:/:st:/:est:/{z}/{y}/{x}';
-  // }
+   
+  // Use subdomains if configured at the DNS level
+  if( document.domain === 'pelias.wiz.co.nz' ){
+    hostMask = 'http://{s}.:domain::port:/:st:/:est:/{z}/{y}/{x}';
+  }
 
   var hostString = hostMask.replace( ':domain:', document.domain )
                            .replace( ':port:', location.port ? ':' + location.port : '' );
