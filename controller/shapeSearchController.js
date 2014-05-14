@@ -17,7 +17,11 @@ module.exports = function( req, res, next ){
     if( err ){ return next( err ); }
     if( data && data.hits ){
 
-      return res.json({
+      res.header('Content-type','application/json');
+      res.header('Charset','utf8');
+
+      // response object
+      var obj = {
         type: 'FeatureCollection',
         features: data.hits.hits.map( function( row ){
           return {
@@ -30,7 +34,15 @@ module.exports = function( req, res, next ){
           }
 
         })
-      });
+      };
+
+      // jsonp
+      if( req.query.callback ){
+        return res.send( req.query.callback + '('+ JSON.stringify( obj ) + ');');
+      }
+
+      // regular json
+      return res.json( obj );
 
     }
 
