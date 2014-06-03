@@ -94,7 +94,7 @@ app.service( 'PeliasGeoJsonLayerManager', function( $rootScope, PeliasGeoJsonLay
 
   var deregister = function( layerName ){
     delete layers[ layerName ];
-    delete enabled[ layerName ] = null;
+    delete enabled[ layerName ];
     return this;
   }
 
