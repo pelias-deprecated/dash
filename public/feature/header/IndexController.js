@@ -21,7 +21,7 @@ app.controller( 'HeaderIndexController', function( $rootScope, $scope, $http ) {
     $scope.results = [];
     $scope.currentText = result.text;
     $scope.search = result.text;
-    $rootScope.$emit( 'map.setView', result.payload.geo.split(',').reverse(), 15 );
+    $rootScope.$emit( 'map.setView', result.payload.geo.split(',').reverse(), 13 );
   }
 
   $scope.$watch( 'search', function( input ){
