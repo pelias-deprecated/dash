@@ -10,7 +10,7 @@
 
     <ul id="results">
       <li ng-repeat="result in results">
-        <a href="/#/map"><i class="glyphicon glyphicon-map-marker" /> {{result.text}}</a>
+        <a ng-click="selectResult(result)"><i class="glyphicon glyphicon-{{result.icon}}" /> <span ng-bind-html-unsafe="result.htmltext"><span></a>
       </li>
     </ul>
 </header>

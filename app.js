@@ -32,6 +32,10 @@ app.set( 'view options', { layout: false } );
 // Routes
 app.get( '/', function( req, res ){ res.render( 'index' ); });
 
+// Suggest
+var suggestController = require('./controller/suggestController');
+app.get( '/suggest', suggestController );
+
 // Shape Search
 var shapeSearchController = require('./controller/shapeSearchController');
 app.get( '/shapes/:type/:z/:y/:x', shapeSearchController );

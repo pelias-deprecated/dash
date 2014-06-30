@@ -1,5 +1,5 @@
 
-app.controller( 'MapIndexController', function( $scope, PeliasGeoJsonLayerManager ) {
+app.controller( 'MapIndexController', function( $rootScope, $scope, PeliasGeoJsonLayerManager ) {
 
   // Helper Functions ( For Context Menu )
   function showCoordinates (e) { alert( e.latlng ); }
@@ -60,37 +60,37 @@ app.controller( 'MapIndexController', function( $scope, PeliasGeoJsonLayerManage
   layerManager.register( 'quattroshapes.admin0',
     hostString.replace(':st:','shapes').replace(':est:','admin0'),
     { color: '#FF00FF' }
-  ).enable( 'quattroshapes.admin0' );
+  ).disable( 'quattroshapes.admin0' );
 
   // Admin1
   layerManager.register( 'quattroshapes.admin1',
     hostString.replace(':st:','shapes').replace(':est:','admin1'),
     { color: '#00FFFF' }
-  ).enable( 'quattroshapes.admin1' );
+  ).disable( 'quattroshapes.admin1' );
 
   // Admin2
   layerManager.register( 'quattroshapes.admin2',
     hostString.replace(':st:','shapes').replace(':est:','admin2'),
     { color: '#FFFF00' }
-  ).enable( 'quattroshapes.admin2' );
+  ).disable( 'quattroshapes.admin2' );
 
   // Local Admin
   layerManager.register( 'quattroshapes.localadmin',
     hostString.replace(':st:','shapes').replace(':est:','local_admin'),
     { color: '#0D0' }
-  ).enable( 'quattroshapes.localadmin' );
+  ).disable( 'quattroshapes.localadmin' );
 
   // Locality
   layerManager.register( 'quattroshapes.locality',
     hostString.replace(':st:','shapes').replace(':est:','locality'),
     { color: '#00D' }
-  ).enable( 'quattroshapes.locality' );
+  ).disable( 'quattroshapes.locality' );
 
   // Neighborhood
   layerManager.register( 'quattroshapes.neighborhood',
     hostString.replace(':st:','shapes').replace(':est:','neighborhood'),
     { color: '#D00' }
-  ).enable( 'quattroshapes.neighborhood' );
+  ).disable( 'quattroshapes.neighborhood' );
 
   // Manually add layer
   // map.addLayer( PeliasGeoJsonLayer( '/shapes/locality/{z}/{y}/{x}' ) );
@@ -98,5 +98,10 @@ app.controller( 'MapIndexController', function( $scope, PeliasGeoJsonLayerManage
   // Center map
   // map.setView( [ 51.505, -0.124 ], 12 ); // London
   map.setView( [ 40.75558, -74.00391 ], 8 ); // New York
+
+  $rootScope.$on( 'map.setView', function( ev, geo, zoom ){
+    console.log( 'setView', geo, zoom || 8 );
+    map.setView( geo, zoom || 8 );
+  })
 
 });

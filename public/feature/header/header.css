@@ -24,7 +24,7 @@
   position: fixed;
   left: 220px;
   top: 12px;
-  width: 500px;
+  width: 650px;
 }
 
 #header #results {
@@ -35,7 +35,7 @@
   position: fixed;
   left: 220px;
   top: 60px;
-  width: 500px;
+  width: 650px;
   background-color: #fff;
 }
 
@@ -50,9 +50,11 @@
   padding: 0 10px;
   line-height: 40px;
   border-top: solid 1px #ddd;
+  cursor: pointer;
 }
 
 #header #results li a:hover {
   text-decoration: none;
   background-color: #efefef;
+  cursor: pointer;
 }
