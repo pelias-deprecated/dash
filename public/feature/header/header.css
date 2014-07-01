@@ -17,17 +17,37 @@
   /*display: block;*/
 }
 
-#header #branding {
-  width: 22%;
-}
-
 #header #searchbar {
+  margin-left: 300px;
   width: 700px;
 }
 
 #header img.logo {
-  padding-left:40px;
+  position: absolute;
+  left: 55px;
+  top: 5px;
 }
+
+#header p#mapzen-logo,
+#header p#pelias-logo {
+  position: absolute;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-family: 'arial' sans-serif;
+  left: 113px;
+}
+
+#header p#mapzen-logo {
+  font-size: 18px;
+  top: -2px;
+}
+
+#header p#pelias-logo {
+  font-size: 12px;
+  top: 14px;
+}
+
 
 #header #searchbar form {
   margin: 0;

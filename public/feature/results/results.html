@@ -1,8 +1,8 @@
 
-<div id="resultpane" data-ng-controller="ResultsIndexController">
+<div id="resultpane" ng-hide="!results.length" data-ng-controller="ResultsIndexController">
   <ul>
     <li ng-repeat="result in results">
-      <strong>{{result.displayname}}</strong>
+      <strong><a ng-click="selectResult(result)">{{result.displayname}}</a></strong>
       <p>{{result.displayaddress}}</p>
       <em>{{result.center_point.lat}}, {{result.center_point.lon}}</em>
       <table class="table" ng-show="result.tags">

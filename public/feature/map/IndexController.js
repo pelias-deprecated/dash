@@ -30,8 +30,8 @@ app.controller( 'MapIndexController', function( $rootScope, $scope, PeliasGeoJso
   });
 
   // Controls
-  map.addControl(new L.Control.ZoomMin());
-  L.control.locate().addTo(map);
+  map.addControl(new L.Control.ZoomMin({ position: 'topright' }));
+  L.control.locate({ position: 'topright' }).addTo(map);
   // L.control.fullscreen().addTo(map);
   L.Marker.include(L.Mixin.ContextMenu);
 

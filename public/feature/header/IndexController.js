@@ -35,18 +35,23 @@ app.controller( 'HeaderIndexController', function( $rootScope, $scope, $http ) {
   $scope.lastSearch = 0;
 
   $scope.selectResult = function( result ){
-    $scope.results = [];
     $scope.currentText = result.text;
     $scope.search = result.text;
     $rootScope.$emit( 'map.setView', result.payload.geo.split(',').reverse(), 14 );
+    $rootScope.$emit( 'hidesuggest' );
   }
 
   // clear search bar
   $scope.$watch( 'search', function( input ){
     if( !input.length ){
-      $scope.results = [];
+      $rootScope.$emit( 'hidesuggest' );
     }
   });
+
+  $rootScope.$on( 'hidesuggest', function( ev ){
+    $scope.results = [];
+  });
+
 
   // --------- suggestions ---------
 

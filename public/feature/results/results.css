@@ -9,6 +9,7 @@
   /*background-color: #563630;*/
   padding: 5px;
   overflow: auto;
+  background-color: rgba( 255, 255, 255, 0.6 );
 }
 
 #resultpane ul, li {
@@ -30,6 +31,10 @@
 
 #resultpane li em {
   color: #888;
+}
+
+#resultpane li a:hover {
+  cursor: pointer;
 }
 
 #resultpane table {
