@@ -14,7 +14,7 @@ module.exports = function( req, res, next ){
   // Generate a request to the ES backend service
   var payload = {
     url: 'http://localhost:9200/pelias/_suggest',
-    method: 'GET',
+    method: 'POST',
     json: buildSuggestCommand( req )
   }
 

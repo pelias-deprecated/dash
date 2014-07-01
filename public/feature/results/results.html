@@ -2,12 +2,16 @@
 <div id="resultpane" ng-hide="!results.length" data-ng-controller="ResultsIndexController">
   <ul>
     <li ng-repeat="result in results">
-      <strong><a ng-click="selectResult(result)">{{result.displayname}}</a></strong>
+      <strong><a ng-click="selectResult(result)">{{result.name}}</a></strong>
       <p>{{result.displayaddress}}</p>
       <em>{{result.center_point.lat}}, {{result.center_point.lon}}</em>
-      <table class="table" ng-show="result.tags">
+      <table class="table" ng-if="result.multiname || result.tags">
+        <tr ng-repeat="(key, value) in result.multiname">
+          <th>name.{{key}}</th>
+          <td>{{value}}</td>
+        </tr>
         <tr ng-repeat="(key, value) in result.tags">
-          <th>{{key}}</th>
+          <th>tags.{{key}}</th>
           <td>{{value}}</td>
         </tr>
       </table>

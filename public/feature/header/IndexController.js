@@ -74,6 +74,7 @@ app.controller( 'HeaderIndexController', function( $rootScope, $scope, $http ) {
         if( data.date < $scope.lastSuggest ) return;
         $scope.lastSuggest = data.date;
 
+        $scope.results.length = 0;
         $scope.results = data.body.map( function( res ){
           var sections = [
             res.payload.name,

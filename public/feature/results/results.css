@@ -9,7 +9,7 @@
   /*background-color: #563630;*/
   padding: 5px;
   overflow: auto;
-  background-color: rgba( 255, 255, 255, 0.6 );
+  background-color: rgba( 255, 255, 255, 0.5 );
 }
 
 #resultpane ul, li {
@@ -40,4 +40,20 @@
 #resultpane table {
   margin-top: 5px;
   margin-bottom: 0;
+  overflow: hidden;
+  font-size: 12px;
+}
+
+#resultpane table th {
+  background-color: #efefef;
+}
+
+#resultpane table caption {
+  font-weight: bold;
+  padding: 3px 0;
+}
+
+#resultpane table th,
+#resultpane table td {
+  padding: 5px;
 }

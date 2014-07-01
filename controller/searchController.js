@@ -14,7 +14,7 @@ module.exports = function( req, res, next ){
   // Generate a request to the ES backend service
   var payload = {
     url: 'http://localhost:9200/pelias/_search',
-    method: 'GET',
+    method: 'POST',
     json: buildSuggestCommand( req )
   }
 
@@ -61,6 +61,7 @@ function buildSuggestCommand( req )
         "fields": ['suggest'],
         "default_operator": 'OR'
       }
-    }
+    },
+    "size": 30
   }
 }
