@@ -13,7 +13,7 @@ module.exports = function( req, res, next ){
 
   // Generate a request to the ES backend service
   var payload = {
-    url: 'http://localhost:9200/pelias/_suggest',
+    url: 'http://localhost:9200/pelias/_search',
     method: 'GET',
     json: buildSuggestCommand( req )
   }
@@ -31,10 +31,14 @@ module.exports = function( req, res, next ){
   // Proxy request to ES backend & map response to a valid FeatureCollection
   request( payload, function( err, resp, data ){
 
-    if( err ){ return next( err ); }
-    if( data && data.pelias && data.pelias.length ){
+    // console.log( 'resp', data );
 
-      obj.body = data['pelias'][0].options;
+    if( err ){ return next( err ); }
+    if( data && data.hits && data.hits.total ){
+
+      obj.body = data.hits.hits.map( function( hit ){
+        return hit._source;
+      });
 
       return sendReply();
     }
@@ -51,14 +55,11 @@ module.exports = function( req, res, next ){
 function buildSuggestCommand( req )
 {
   return {
-    'pelias' : {
-      'text' : req.query.input,
-      'completion' : {
-        'size' : 10,
-        'field' : 'suggest',
-        'fuzzy' : {
-          'fuzziness' : 0
-        }
+    "query": {
+      "query_string": {
+        "query": req.query.input,
+        "fields": ['suggest'],
+        "default_operator": 'OR'
       }
     }
   }

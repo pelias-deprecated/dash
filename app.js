@@ -36,6 +36,10 @@ app.get( '/', function( req, res ){ res.render( 'index' ); });
 var suggestController = require('./controller/suggestController');
 app.get( '/suggest', suggestController );
 
+// Search
+var searchController = require('./controller/searchController');
+app.get( '/search', searchController );
+
 // Shape Search
 var shapeSearchController = require('./controller/shapeSearchController');
 app.get( '/shapes/:type/:z/:y/:x', shapeSearchController );
