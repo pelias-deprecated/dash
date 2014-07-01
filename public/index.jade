@@ -56,6 +56,10 @@ html(data-ng-app="pelias")
     script(src="/feature/menu/IndexController.js")
     link(rel="stylesheet", href="/feature/menu/menu.css")
 
+    // Results
+    script(src="/feature/results/IndexController.js")
+    link(rel="stylesheet", href="/feature/results/results.css")
+
     // Header
     script(src="/feature/header/IndexController.js")
     link(rel="stylesheet", href="/feature/header/header.css")
@@ -73,6 +77,7 @@ html(data-ng-app="pelias")
     .header-container(data-ng-include="'/feature/header/header.html'")
 
     .container
+      .results-container(data-ng-include="'/feature/results/results.html'")
       .menu-container(data-ng-include="'/feature/menu/menu.html'")
 
       // Main Content Section

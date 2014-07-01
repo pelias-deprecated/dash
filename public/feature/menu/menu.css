@@ -8,6 +8,7 @@
   z-index: 0;
   /*background-color: #fff;*/
   padding: 5px;
+  display:none;
 }
 
 #menu h5 {

@@ -3,6 +3,7 @@ var request = require('request');
 
 module.exports = function( req, res, next ){
 
+  var reqDate = new Date().getTime();
 
   // Generate a request to the ES backend service
   var payload = {
@@ -20,7 +21,10 @@ module.exports = function( req, res, next ){
       res.header('Content-type','application/json');
       res.header('Charset','utf8');
 
-      var obj = data['pelias'][0].options;
+      var obj = {
+        date: reqDate,
+        body: data['pelias'][0].options
+      };
 
       // jsonp
       if( req.query.callback ){

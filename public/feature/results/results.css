@@ -1,0 +1,24 @@
+
+#resultpane {
+  position: fixed;
+  top: 60px;
+  bottom: 0;
+  left: 0;
+  width: 300px;
+  z-index: 0;
+  background-color: #563630;
+  padding: 5px;
+}
+
+#resultpane h5 {
+  text-align: center;
+  font-weight: bold;
+}
+
+#resultpane .btn-group-vertical {
+  width: 100%;
+}
+
+#resultpane .btn-group-vertical .active {
+  width: 100%;
+}

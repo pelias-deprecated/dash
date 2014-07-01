@@ -1,11 +1,21 @@
 <header id="header" ng-controller="HeaderIndexController">
+  <section id="branding">
     <img class="logo" src="/mapzen_logo.png" alt="mapzen">
+  </section>
+  <section id="searchbar">
     <form role="search">
       <div class="input-group">
         <!-- <span class="input-group-addon"><i class="icon-search"></i></span> -->
         <input type="text" ng-model="search" class="form-control" placeholder="Search" />      
+        <!-- <div class="input-group-btn">
+          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span ng-bind="dataset"></span>&nbsp;&nbsp;&nbsp;<span class="caret"></span></button>
+          <ul class="dropdown-menu dropdown-menu-right" role="menu">
+            <li><a ng-click="selectDataset()">all datasets</a></li>
+            <li><a ng-click="selectDataset('geoname')">geonames</a></li>
+            <li><a ng-click="selectDataset('openstreetmap')">openstreetmap</a></li>
+          </ul>
+        </div> /btn-group -->
       </div>
-      <!-- <button type="submit" class="btn btn-default">Submit</button> -->
     </form>
 
     <ul id="results">
@@ -13,4 +23,5 @@
         <a ng-click="selectResult(result)"><i class="glyphicon glyphicon-{{result.icon}}" /> <span ng-bind-html-unsafe="result.htmltext"><span></a>
       </li>
     </ul>
+  </section>
 </header>

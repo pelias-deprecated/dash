@@ -16,32 +16,43 @@ app.controller( 'HeaderIndexController', function( $rootScope, $scope, $http ) {
   $scope.search = '';
   $scope.results = [];
   $scope.currentText = '';
+  $scope.lastResult = 0;
 
   $scope.selectResult = function( result ){
     $scope.results = [];
     $scope.currentText = result.text;
     $scope.search = result.text;
-    $rootScope.$emit( 'map.setView', result.payload.geo.split(',').reverse(), 13 );
+    $rootScope.$emit( 'map.setView', result.payload.geo.split(',').reverse(), 14 );
   }
 
   $scope.$watch( 'search', function( input ){
 
-    if( input === $scope.currentText ) return;
     if( !input.length ){
       $scope.results = [];
       return;
     }
 
+    if( input === $scope.currentText ){
+      return;
+    }
+
+    var params = {
+      input: input
+    };
+
     $http({
       url: '/suggest',
       method: 'GET',
-      params: {
-        input: input
-      },
+      params: params,
       headers: {'Accept': 'application/json'}
     }).success(function (data, status, headers, config) {
       if( data ){
-        $scope.results = data.map( function( res ){
+
+        // prevent older results loading over newer ones
+        if( data.date < $scope.lastResult ) return;
+        $scope.lastResult = data.date;
+
+        $scope.results = data.body.map( function( res ){
           var sections = [
             res.payload.name,
             res.payload.admin2 || res.payload.admin1,
