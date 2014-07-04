@@ -3,26 +3,33 @@
     <img class="logo" src="/mapzen_logo_icon.png" alt="mapzen" />
     <p id="mapzen-logo">mapzen</p>
     <p id="pelias-logo">pelias</p>
+    <p id="geobase"><i class="glyphicon glyphicon-map-marker" /> {{geobase}}</p>
   </section>
   <section id="searchbar">
     <form role="search">
       <div class="input-group">
         <!-- <span class="input-group-addon"><i class="icon-search"></i></span> -->
         <input type="text" ng-model="search" class="form-control" placeholder="Search" />      
-        <!-- <div class="input-group-btn">
+        <div class="input-group-btn">
           <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span ng-bind="dataset"></span>&nbsp;&nbsp;&nbsp;<span class="caret"></span></button>
           <ul class="dropdown-menu dropdown-menu-right" role="menu">
-            <li><a ng-click="selectDataset()">all datasets</a></li>
-            <li><a ng-click="selectDataset('geoname')">geonames</a></li>
-            <li><a ng-click="selectDataset('openstreetmap')">openstreetmap</a></li>
+            <li ng-repeat="(key, value) in datasets">
+              <a ng-click="selectDataset(key)">{{value}}</a>
+            </li>
           </ul>
-        </div> /btn-group -->
+        </div> <!-- /btn-group -->
       </div>
     </form>
 
     <ul id="results">
       <li ng-repeat="result in results">
-        <a ng-click="selectResult(result)"><i class="glyphicon glyphicon-{{result.icon}}" /> <span ng-bind-html-unsafe="result.htmltext"><span></a>
+        <a ng-click="selectResult(result)">
+          <i class="glyphicon glyphicon-{{result.icon}}" /> 
+          <span ng-bind-html-unsafe="result.htmltext"></span>
+        </a>
+        <div class="aside">
+          <em class="label label-info">{{result.distance}}km</em><a class="label label-primary" href="{{result.refurl}}" target="es">{{result.score}}</a>
+        </div>
       </li>
     </ul>
   </section>

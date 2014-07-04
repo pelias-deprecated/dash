@@ -27,9 +27,7 @@ module.exports = function( req, res, next ){
           return {
             type: 'Feature',
             id: row._id,
-            properties: {
-              name: row._source.name
-            },
+            properties: row._source.name,
             geometry: {
               type: 'Point',
               coordinates: [

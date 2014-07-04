@@ -8,7 +8,7 @@ module.exports = function( req, res, next ){
 
   var obj = {
     date: new Date().getTime(),
-    data: []
+    body: []
   };
 
   // Generate a request to the ES backend service
@@ -31,6 +31,8 @@ module.exports = function( req, res, next ){
   // Proxy request to ES backend & map response to a valid FeatureCollection
   request( payload, function( err, resp, data ){
 
+    console.log( JSON.stringify( data, null , 2 ) );
+
     if( err ){ return next( err ); }
     if( data && data.pelias && data.pelias.length ){
 
@@ -40,7 +42,7 @@ module.exports = function( req, res, next ){
     }
 
     else {
-      console.error( 'hits error', JSON.stringify( data, null , 2 ) );
+      // console.error( 'hits error', JSON.stringify( data, null , 2 ) );
       return sendReply();
     }
   });
@@ -50,16 +52,21 @@ module.exports = function( req, res, next ){
 // Build elasticsearch query object
 function buildSuggestCommand( req )
 {
-  return {
+  var cmd = {
     'pelias' : {
       'text' : req.query.input,
       'completion' : {
-        'size' : 10,
+        'size' : req.query.size ? Math.min( req.query.size, 40 ) : 10,
         'field' : 'suggest',
-        'fuzzy' : {
-          'fuzziness' : 0
+        'context': {
+          'dataset': req.query.datasets ? req.query.datasets.split(',') : 'geoname',
+          'location': req.query.geobias.split(',').reverse().map( function( ll ){
+            return Number( ll );
+          })
         }
       }
     }
   }
+  console.log( 'cmd', JSON.stringify( cmd, null, 2 ) );
+  return cmd;
 }

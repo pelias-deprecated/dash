@@ -19,35 +19,43 @@
 
 #header #searchbar {
   margin-left: 300px;
-  width: 700px;
+  width: 800px;
 }
 
 #header img.logo {
   position: absolute;
-  left: 55px;
+  left: 10px;
   top: 5px;
 }
 
 #header p#mapzen-logo,
-#header p#pelias-logo {
+#header p#pelias-logo,
+#header p#geobase {
   position: absolute;
   color: #888;
   text-transform: uppercase;
   letter-spacing: 0.18em;
   font-family: 'arial' sans-serif;
-  left: 113px;
+  left: 73px;
 }
 
 #header p#mapzen-logo {
-  font-size: 18px;
-  top: -2px;
+  left: 72px;
+  font-size: 17px;
+  top: -9px;
 }
 
 #header p#pelias-logo {
-  font-size: 12px;
-  top: 14px;
+  font-size: 10px;
+  top: 4px;
 }
 
+#header p#geobase {
+  left: 71px;
+  font-size: 10px;
+  top: 18px;
+  letter-spacing: normal;
+}
 
 #header #searchbar form {
   margin: 0;
@@ -58,7 +66,7 @@
   margin: 0;
   padding: 0;
   margin-left: 10px;
-  /*width: 650px;*/
+  width: 650px;
 }
 
 #header #searchbar form input {
@@ -75,11 +83,12 @@
 }
 
 #header #searchbar form button {
-  min-width: 150px;
+  width: 150px;
 }
 
 #header #results {
-  margin-top: -10px;
+  margin-top: -11px;
+  width: 648px;
   list-style: none;
   background-color: #fff;
   box-shadow: 2px 2px 1px #ccc;
@@ -88,20 +97,55 @@
 #header #results li {
   margin: 0;
   padding: 0;
-}
-
-#header #results li a {
   display: block;
-  margin: 0;
   padding: 0 10px;
   line-height: 40px;
   border-top: solid 1px #ddd;
   border-left: solid 1px #ddd;
+  clear: both;
+}
+
+#header #results li a {
+  margin: 0;
   cursor: pointer;
 }
 
-#header #results li a:hover {
+#header a:hover {
   text-decoration: none;
-  background-color: #efefef;
+  /*background-color: #efefef;*/
   cursor: pointer;
+}
+
+#header #results a span {
+}
+
+#header #results .aside {
+  float:right;
+  margin-top: 0px;
+}
+
+#header .label {
+  padding: 8px 5px;
+}
+
+#header #results .aside em {
+  -webkit-border-top-right-radius: 0px;
+  -webkit-border-bottom-right-radius: 0px;
+  -moz-border-radius-topright: 0px;
+  -moz-border-radius-bottomright: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+#header #results .aside a {
+  -webkit-border-top-left-radius: 0px;
+  -webkit-border-bottom-left-radius: 0px;
+  -moz-border-radius-topleft: 0px;
+  -moz-border-radius-bottomleft: 0px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+#header #results .aside a:hover {
+  background-color: rgba(66, 139, 202, 0.8);
 }

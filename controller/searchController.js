@@ -31,8 +31,6 @@ module.exports = function( req, res, next ){
   // Proxy request to ES backend & map response to a valid FeatureCollection
   request( payload, function( err, resp, data ){
 
-    // console.log( 'resp', data );
-
     if( err ){ return next( err ); }
     if( data && data.hits && data.hits.total ){
 
@@ -44,7 +42,7 @@ module.exports = function( req, res, next ){
     }
 
     else {
-      console.error( 'hits error', JSON.stringify( data, null , 2 ) );
+      // console.error( 'hits error', JSON.stringify( data, null , 2 ) );
       return sendReply();
     }
   });

@@ -5,10 +5,10 @@ html(data-ng-app="pelias")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
 
     // Web Fonts
-    link(rel="stylesheet", href="http://fonts.googleapis.com/css?family=Open+Sans", type="text/css")
+    //link(rel="stylesheet", href="http://fonts.googleapis.com/css?family=Open+Sans", type="text/css")
 
     // Core Dependencies
-    script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js")
+    script(src="/vendor/jquery.min.js")
     script(src="/bower_components/underscore/underscore-min.js")
     script(type="text/javascript", src="/bower_components/angular/angular.js")
 
@@ -24,12 +24,16 @@ html(data-ng-app="pelias")
     script(type="text/javascript", src="/vendor/TileLayer.GeoJSON.js")
 
     // Leaflet Locate Control
-    link(rel="stylesheet", href="//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.24.0/L.Control.Locate.css")
-    script(type="text/javascript", src="//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.24.0/L.Control.Locate.js")
+    link(rel="stylesheet", href="/vendor/L.Control.Locate.css")
+    script(type="text/javascript", src="/vendor/L.Control.Locate.js")
 
     // Leaflet Fullscreen Control
-    link(rel="stylesheet", href="//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/leaflet.fullscreen.css")
-    script(type="text/javascript", src="//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/Leaflet.fullscreen.min.js")
+    link(rel="stylesheet", href="/vendor/leaflet.fullscreen.css")
+    script(type="text/javascript", src="/vendor/Leaflet.fullscreen.min.js")
+
+    // Geo Tools
+    script(type="text/javascript", src="/vendor/latlon.js")
+    script(type="text/javascript", src="/vendor/geo.js")
 
     // Leaflet Zoom Control
     link(rel="stylesheet", href="/vendor/L.Control.ZoomMin.css")
