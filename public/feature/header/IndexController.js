@@ -13,7 +13,7 @@
 
 app.controller( 'HeaderIndexController', function( $rootScope, $scope, $http ) {
 
-  var databaseurl = 'http://localhost:9200/pelias/';
+  var databaseurl = 'http://'+document.domain+':9200/pelias/';
 
   $rootScope.$on( 'geobase', function( ev, geobase ){
     $scope.$apply( function(){
