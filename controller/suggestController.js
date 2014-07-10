@@ -60,9 +60,12 @@ function buildSuggestCommand( req )
         'field' : 'suggest',
         'context': {
           'dataset': req.query.datasets ? req.query.datasets.split(',') : 'geoname',
-          'location': req.query.geobias.split(',').reverse().map( function( ll ){
-            return Number( ll );
-          })
+          'location': {
+            'value': req.query.geobias.split(',').reverse().map( function( ll ){
+              return Number( ll );
+            }),
+            'precision': "8000km"
+          }
         }
       }
     }
