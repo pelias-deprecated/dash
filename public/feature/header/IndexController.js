@@ -38,7 +38,7 @@ app.controller( 'HeaderIndexController', function( $rootScope, $scope, $http ) {
   }
 
   var icon = function( type ){
-    if( type === 'geoname' ){
+    if( type.match('geoname') ){
       return 'tag';
     } else if( type.match('osm') ){
       return 'globe';
@@ -106,23 +106,11 @@ app.controller( 'HeaderIndexController', function( $rootScope, $scope, $http ) {
 
         $scope.results.length = 0;
         $scope.results = data.body.map( function( res ){
-          var sections = [
-            res.text
-              .replace(res.payload.admin2+' ','')
-              .replace(res.payload.admin1+' ','')
-              .replace(res.payload.admin0+' ',''),
-            res.payload.admin2 || res.payload.admin1,
-            res.payload.admin0,
-          ];
-          var uniq = sections.filter(function(a){ return a; }).reverse().filter(function (e, i, arr) {
-            return arr.indexOf(e, i+1) === -1;
-          }).reverse();
-          res.text = uniq.join(', ');
           res.htmltext = highlight( res.text, $scope.search );
-          res.icon = icon( res.payload.type );
+          res.icon = icon( res.payload.id );
 
           // refurl
-          res.refurl = databaseurl + res.payload.type + '/' + res.payload.id;
+          res.refurl = databaseurl + res.payload.id;
 
           // distance 
           var p1 = new LatLon( $rootScope.geobase[0], $rootScope.geobase[1] );

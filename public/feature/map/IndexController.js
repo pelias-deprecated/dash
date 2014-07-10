@@ -127,6 +127,8 @@ app.controller( 'MapIndexController', function( $rootScope, $scope, PeliasGeoJso
     setGeoBase();
   });
 
+  // setGeoBase([40.75558, -74.00391]);
+
   $rootScope.$on( 'map.setView', function( ev, geo, zoom ){
     console.log( 'setView', geo, zoom || 8 );
     map.setView( geo, zoom || 8 );
