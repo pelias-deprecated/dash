@@ -1,4 +1,4 @@
-
 node_modules
 npm-debug.log
 public/bower_components
+*.log
