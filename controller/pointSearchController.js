@@ -1,18 +1,15 @@
-var request = require('request'),
+var esclient = require('pelias-esclient')(),
     SphericalMercator = require('sphericalmercator'),
     mercator = new SphericalMercator();
 
 module.exports = function( req, res, next ){
 
-  // Generate a request to the ES backend service
-  var payload = {
-    url: 'http://localhost:9200/pelias/' + req.params.type + '/_search',
-    method: 'POST',
-    json: buildSearchCommand( req )
-  }
-
   // Proxy request to ES backend & map response to a valid FeatureCollection
-  request( payload, function( err, resp, data ){
+  esclient.search({
+    index: 'pelias',
+    type: req.params.type,
+    body: buildSearchCommand( req )
+  }, function( err, data ){
 
     if( err ){ return next( err ); }
     if( data && data.hits ){

@@ -1,5 +1,5 @@
 
-var request = require('request');
+var esclient = require('pelias-esclient')();
 
 module.exports = function( req, res, next ){
 
@@ -10,13 +10,6 @@ module.exports = function( req, res, next ){
     date: new Date().getTime(),
     data: []
   };
-
-  // Generate a request to the ES backend service
-  var payload = {
-    url: 'http://localhost:9200/pelias/_search',
-    method: 'POST',
-    json: buildSuggestCommand( req )
-  }
 
   var sendReply = function(){
     // jsonp
@@ -29,7 +22,10 @@ module.exports = function( req, res, next ){
   }
 
   // Proxy request to ES backend & map response to a valid FeatureCollection
-  request( payload, function( err, resp, data ){
+  esclient.search({
+    index: 'pelias',
+    body: buildSearchCommand( req )
+  }, function( err, data ){
 
     if( err ){ return next( err ); }
     if( data && data.hits && data.hits.total ){
@@ -50,7 +46,7 @@ module.exports = function( req, res, next ){
 }
 
 // Build elasticsearch query object
-function buildSuggestCommand( req )
+function buildSearchCommand( req )
 {
   return {
     "query": {
