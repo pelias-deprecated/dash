@@ -49,7 +49,8 @@ app.controller( 'HeaderIndexController', function( $rootScope, $scope, $http ) {
   $scope.datasets = {
     '*':'all datasets',
     'geoname': 'geonames',
-    'osmnode': 'openstreetmap'
+    'osmnode': 'osmnode',
+    'osmway':  'osmway'
   }
 
   $scope.selectDataset = function( datasetid ){
