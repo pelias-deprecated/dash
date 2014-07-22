@@ -1,4 +1,5 @@
 var esclient = require('pelias-esclient')(),
+    responder = require('./responder'),
     SphericalMercator = require('sphericalmercator'),
     mercator = new SphericalMercator();
 
@@ -11,11 +12,8 @@ module.exports = function( req, res, next ){
     body: buildSearchCommand( req )
   }, function( err, data ){
 
-    if( err ){ return next( err ); }
+    if( err ){ return responder.error( req, res, next, err ); }
     if( data && data.hits ){
-
-      res.header('Content-type','application/json');
-      res.header('Charset','utf8');
 
       // response object
       var obj = {
@@ -33,13 +31,7 @@ module.exports = function( req, res, next ){
         })
       };
 
-      // jsonp
-      if( req.query.callback ){
-        return res.send( req.query.callback + '('+ JSON.stringify( obj ) + ');');
-      }
-
-      // regular json
-      return res.json( obj );
+      return responder.cors( req, res, obj );
 
     }
 
