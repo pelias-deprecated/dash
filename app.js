@@ -1,6 +1,6 @@
 
 var path = require('path'),
-    express = require('express')
+    express = require('express');
 
 // Express
 app = express();
