@@ -107,6 +107,11 @@ app.controller( 'MapIndexController', function( $rootScope, $scope, PeliasGeoJso
   // map.setView( [ 40.75558, -74.00391 ], 8 ); // New York
 
   var setGeoBase = function( coords ){
+    setMapCoords(coords);
+    setMapView(15);
+  }
+  
+  var setMapCoords = function(coords) {
     if( !coords ){
       console.log( 'using default geolocation' );
       $rootScope.geobase = [ 51.505, -0.124 ]; // London
@@ -115,9 +120,11 @@ app.controller( 'MapIndexController', function( $rootScope, $scope, PeliasGeoJso
       $rootScope.geobase = coords;
     }
     $rootScope.$emit( 'geobase', $rootScope.geobase );
-    map.setView( $rootScope.geobase, 15 ); // London
   }
 
+  var setMapView = function(zoom) {
+    map.setView( $rootScope.geobase, zoom || 15 ); // London
+  }
   navigator.geolocation.getCurrentPosition( function( pos ){
     if( pos && pos.coords ){
       setGeoBase( [ pos.coords.latitude, pos.coords.longitude ] );
@@ -127,10 +134,13 @@ app.controller( 'MapIndexController', function( $rootScope, $scope, PeliasGeoJso
     setGeoBase();
   });
 
-  // setGeoBase([40.75558, -74.00391]);
+  map.on('moveend', function () {
+    var pos = map.getCenter();
+    setMapCoords([pos.lat, pos.lng]);
+  });
 
   $rootScope.$on( 'map.setView', function( ev, geo, zoom ){
-    console.log( 'setView', geo, zoom || 8 );
+    // console.log( 'setView', geo, zoom || 8 );
     map.setView( geo, zoom || 8 );
   })
 
