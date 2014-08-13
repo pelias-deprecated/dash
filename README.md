@@ -11,7 +11,7 @@ NOTE: This is very early stage, please feel free to fork & contribute.
 sudo npm install bower -g
 bower install
 npm install
-node app.js
+npm start
 ```
 
 Open `http://localhost:3000` in your browser.
