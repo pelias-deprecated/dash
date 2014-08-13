@@ -48,7 +48,7 @@ function buildSuggestCommand( req )
             'value': req.query.geobias.split(',').reverse().map( function( ll ){
               return Number( ll );
             }),
-            'precision': "1500km"
+            'precision': 2
           }
         }
       }
