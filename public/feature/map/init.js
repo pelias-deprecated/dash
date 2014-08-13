@@ -29,7 +29,7 @@ app.factory( 'PeliasGeoJsonLayer', function() {
     var layerOptions = {
       clipTiles: true
       // unique: function (feature) {
-      //   return feature.id; 
+      //   return feature.id;
       // }
     }
 
@@ -37,7 +37,7 @@ app.factory( 'PeliasGeoJsonLayer', function() {
 
       style: style,
       onEachFeature: function (feature, layer) {
-        
+
         if( feature.properties ){
 
           var popupString = '<div class="popup">';
@@ -62,7 +62,7 @@ app.factory( 'PeliasGeoJsonLayer', function() {
           });
         }
 
-      }  
+      }
     });
 
     return geoJsonTileLayer;
@@ -80,7 +80,7 @@ app.service( 'PeliasGeoJsonLayerManager', function( $rootScope, PeliasGeoJsonLay
   $rootScope.$on( 'peliasLayerUpdateNow', function( ev ){
     $rootScope.$emit( 'peliasLayerUpdate', enabled );
   });
-  
+
   var bind = function( leafletMap ){
     map = leafletMap;
     return this;
@@ -119,7 +119,7 @@ app.service( 'PeliasGeoJsonLayerManager', function( $rootScope, PeliasGeoJsonLay
       enable( layerName );
     }
   }
-  
+
   var layers = function(){
     return enabled;
   }

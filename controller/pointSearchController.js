@@ -15,6 +15,8 @@ module.exports = function( req, res, next ){
     if( err ){ return responder.error( req, res, next, err ); }
     if( data && data.hits ){
 
+      // console.log( 'hits length', data.hits.hits.length );
+
       // response object
       var obj = {
         type: 'FeatureCollection',
@@ -60,18 +62,33 @@ function generateBbox( req )
 function buildSearchCommand( req )
 {
   var bbox = generateBbox( req );
+  // [ w lon, s lat, e lon, n lat ]
+
+  // console.log( 'bbox', bbox );
 
   return {
-    query: { "match_all": {} },
-    filter : {
-      'geo_bounding_box': {
-        'center_point': {
-          'top_left': [ bbox[0], bbox[3] ],
-          'bottom_right': [ bbox[2], bbox[1] ]
+    'query': {
+      'filtered': {
+        'query': {
+          'match_all': {}
         },
-        '_cache' : true
+        'filter' : {
+          'geo_bounding_box': {
+            'center_point': {
+              'top_left': {
+                'lat': bbox[3],
+                'lon': bbox[0]
+              },
+              'bottom_right': {
+                'lat': bbox[1],
+                'lon': bbox[2]
+              }
+            },
+            '_cache' : true
+          }
+        }
       }
     },
-    size: 1000
+    'size': 1000
   }
 }
