@@ -57,6 +57,26 @@
   letter-spacing: normal;
 }
 
+#header .shortcuts {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  left: 205px;
+  top: 5px;
+  width: 100px;
+}
+
+#header .shortcuts li,
+#header .shortcuts li a {
+  margin: 0;
+  padding: 2px;
+  font-size: 9px;
+  line-height: 9px;
+  float: left;
+  width: 50px;
+  /*background-color: blue;*/
+}
+
 #header #searchbar form {
   margin: 0;
 }

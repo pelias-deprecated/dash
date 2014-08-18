@@ -19,14 +19,19 @@ module.exports = function( req, res, next ){
       var obj = {
         type: 'FeatureCollection',
         features: data.hits.hits.map( function( row ){
+
+          var props = {};
+          if( 'object' === typeof row._source.suggest ){
+            props = row._source.suggest.payload;
+          }
+          props.name = row._source.name;
+
           return {
             type: 'Feature',
             id: row._id,
-            properties: {
-              name: row._source.suggest
-            },
+            properties: props,
             geometry: row._source.boundaries
-          }
+          };
 
         })
       };

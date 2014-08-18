@@ -3,7 +3,15 @@
 	position: fixed;
 	top: 60px;
 	bottom: 0;
-	left: 0px;
+	left: 0px; /* 300px; */
 	right: 0;
 	z-index: -50;
+}
+
+#map .popup {
+  font-family: 'Open Sans', sans-serif;
+}
+
+#map .popup h3 {
+  color: #111;
 }
