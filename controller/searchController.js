@@ -40,7 +40,7 @@ function buildSearchCommand( req )
     "query": {
       "query_string": {
         "query": req.query.input,
-        "fields": ['suggest'],
+        "fields": ['name.default'],
         "default_operator": 'OR'
       }
     },

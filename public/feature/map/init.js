@@ -27,10 +27,10 @@ app.factory( 'PeliasGeoJsonLayer', function() {
     }
 
     var layerOptions = {
-      clipTiles: true
-      // unique: function (feature) {
-      //   return feature.id;
-      // }
+      clipTiles: true,
+      unique: function (feature) {
+        return feature.id;
+      }
     }
 
     var geoJsonTileLayer = new L.TileLayer.GeoJSON( geoJsonURL, layerOptions, {
@@ -42,11 +42,25 @@ app.factory( 'PeliasGeoJsonLayer', function() {
 
           var popupString = '<div class="popup">';
 
-          for( var k in feature.properties ) {
-            var v = feature.properties[k];
-            popupString += k + ': ' + v + '<br />';
+          if( feature.properties.name ) {
+            popupString += '<h3>' + feature.properties.name.default + '</h3>';
           }
 
+          if( feature.properties.id ) {
+            var id = feature.properties.id;
+            var url = 'http://localhost:9200/pelias/' + id;
+            popupString += '<a href="' + url + '" target="es">' + id + '<a />';
+          }
+
+          popupString += '<table class="table">';
+
+          for( var k in feature.properties ) {
+            if( k == 'name' ) continue;
+            var v = feature.properties[k];
+            popupString += '<tr><th>' + k + '</th><td>' + v + '</td></tr>';
+          }
+
+          popupString += '</table>';
           popupString += '</div>';
           layer.bindPopup( popupString );
         }

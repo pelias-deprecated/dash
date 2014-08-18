@@ -42,7 +42,7 @@ app.controller( 'MapIndexController', function( $rootScope, $scope, PeliasGeoJso
 
   // Host String
   var hostMask = 'http://:domain::port:/:st:/:est:/{z}/{y}/{x}';
-   
+
   // Use subdomains if configured at the DNS level
   // if( document.domain === 'pelias.wiz.co.nz' ){
   //   hostMask = 'http://{s}.:domain::port:/:st:/:est:/{z}/{y}/{x}';
@@ -50,54 +50,60 @@ app.controller( 'MapIndexController', function( $rootScope, $scope, PeliasGeoJso
 
   var hostString = hostMask.replace( ':domain:', document.domain )
                            .replace( ':port:', location.port ? ':' + location.port : '' );
-  
+
   // Geonames
   layerManager.register( 'geonames',
     hostString.replace(':st:','points').replace(':est:','geoname'),
     { color: '#D00' }
   ).disable( 'geonames' );
 
-  // Geonames
+  // OSM
   layerManager.register( 'osm.node',
     hostString.replace(':st:','points').replace(':est:','osmnode'),
     { color: '#FF00FF' }
   ).disable( 'osm.node' );
 
-  // // Admin0
-  // layerManager.register( 'quattroshapes.admin0',
-  //   hostString.replace(':st:','shapes').replace(':est:','admin0'),
-  //   { color: '#FF00FF' }
-  // ).disable( 'quattroshapes.admin0' );
+  // OSM
+  layerManager.register( 'osm.way',
+    hostString.replace(':st:','points').replace(':est:','osmway'),
+    { color: '#00FF00' }
+  ).disable( 'osm.way' );
 
-  // // Admin1
-  // layerManager.register( 'quattroshapes.admin1',
-  //   hostString.replace(':st:','shapes').replace(':est:','admin1'),
-  //   { color: '#00FFFF' }
-  // ).disable( 'quattroshapes.admin1' );
+  // Admin0
+  layerManager.register( 'quattroshapes.admin0',
+    hostString.replace(':st:','shapes').replace(':est:','admin0'),
+    { color: '#FF00FF' }
+  ).disable( 'quattroshapes.admin0' );
 
-  // // Admin2
-  // layerManager.register( 'quattroshapes.admin2',
-  //   hostString.replace(':st:','shapes').replace(':est:','admin2'),
-  //   { color: '#FFFF00' }
-  // ).disable( 'quattroshapes.admin2' );
+  // Admin1
+  layerManager.register( 'quattroshapes.admin1',
+    hostString.replace(':st:','shapes').replace(':est:','admin1'),
+    { color: '#00FFFF' }
+  ).disable( 'quattroshapes.admin1' );
 
-  // // Local Admin
-  // layerManager.register( 'quattroshapes.localadmin',
-  //   hostString.replace(':st:','shapes').replace(':est:','local_admin'),
-  //   { color: '#0D0' }
-  // ).disable( 'quattroshapes.localadmin' );
+  // Admin2
+  layerManager.register( 'quattroshapes.admin2',
+    hostString.replace(':st:','shapes').replace(':est:','admin2'),
+    { color: '#FFFF00' }
+  ).disable( 'quattroshapes.admin2' );
 
-  // // Locality
-  // layerManager.register( 'quattroshapes.locality',
-  //   hostString.replace(':st:','shapes').replace(':est:','locality'),
-  //   { color: '#00D' }
-  // ).disable( 'quattroshapes.locality' );
+  // Local Admin
+  layerManager.register( 'quattroshapes.localadmin',
+    hostString.replace(':st:','shapes').replace(':est:','local_admin'),
+    { color: '#0D0' }
+  ).disable( 'quattroshapes.localadmin' );
 
-  // // Neighborhood
-  // layerManager.register( 'quattroshapes.neighborhood',
-  //   hostString.replace(':st:','shapes').replace(':est:','neighborhood'),
-  //   { color: '#D00' }
-  // ).disable( 'quattroshapes.neighborhood' );
+  // Locality
+  layerManager.register( 'quattroshapes.locality',
+    hostString.replace(':st:','shapes').replace(':est:','locality'),
+    { color: '#00D' }
+  ).disable( 'quattroshapes.locality' );
+
+  // Neighborhood
+  layerManager.register( 'quattroshapes.neighborhood',
+    hostString.replace(':st:','shapes').replace(':est:','neighborhood'),
+    { color: '#D00' }
+  ).disable( 'quattroshapes.neighborhood' );
 
   // Manually add layer
   // map.addLayer( PeliasGeoJsonLayer( '/shapes/locality/{z}/{y}/{x}' ) );
@@ -110,7 +116,7 @@ app.controller( 'MapIndexController', function( $rootScope, $scope, PeliasGeoJso
     setMapCoords(coords);
     setMapView(15);
   }
-  
+
   var setMapCoords = function(coords) {
     if( !coords ){
       console.log( 'using default geolocation' );

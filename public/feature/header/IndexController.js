@@ -13,12 +13,19 @@
 
 app.controller( 'HeaderIndexController', function( $rootScope, $scope, $http ) {
 
+  // handle clicking the location shorcuts
+  $scope.shortcut = function( geo, zoom ){
+    $rootScope.$emit( 'map.setView', geo, zoom );
+  }
+
   var databaseurl = 'http://'+document.domain+':9200/pelias/';
 
   $rootScope.$on( 'geobase', function( ev, geobase ){
     $scope.$apply( function(){
       $scope.geobase = Number( geobase[1] ).toFixed(7) + ', ' + Number( geobase[0] ).toFixed(7);
-    })
+    });
+
+    $scope.suggest(); // run suggester on map changes
   });
 
   // simple highlights
@@ -39,19 +46,29 @@ app.controller( 'HeaderIndexController', function( $rootScope, $scope, $http ) {
 
   var icon = function( type ){
     if( type.match('geoname') ){
-      return 'tag';
+      return 'screenshot';
     } else if( type.match('osm') ){
       return 'globe';
+    } else if( type.match('admin0') ){
+      return 'flag';
+    } else if( type.match('admin') ){
+      return 'tower';
+    } else if( type.match('neighborhood') ){
+      return 'home';
     }
     return 'map-marker';
-  }
+  };
 
   $scope.datasets = {
     '*':'all datasets',
     'geoname': 'geonames',
     'osmnode': 'osmnode',
-    'osmway':  'osmway'
-  }
+    'osmway':  'osmway',
+    'admin0': 'admin0',
+    'admin1': 'admin1',
+    'admin2': 'admin2',
+    'neighborhood': 'neighborhood'
+  };
 
   $scope.selectDataset = function( datasetid ){
     $scope.dataset = $scope.datasets[ datasetid ];
@@ -113,7 +130,7 @@ app.controller( 'HeaderIndexController', function( $rootScope, $scope, $http ) {
           // refurl
           res.refurl = databaseurl + res.payload.id;
 
-          // distance 
+          // distance
           var p1 = new LatLon( $rootScope.geobase[0], $rootScope.geobase[1] );
           var p2 = new LatLon( res.payload.geo.split(',')[1], res.payload.geo.split(',')[0] );
           res.distance = Number( p1.distanceTo(p2) );

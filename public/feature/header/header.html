@@ -4,12 +4,20 @@
     <p id="mapzen-logo">mapzen</p>
     <p id="pelias-logo">pelias</p>
     <p id="geobase"><i class="glyphicon glyphicon-map-marker" /> {{geobase}}</p>
+    <ul class="shortcuts">
+      <li><a ng-click="shortcut([51.505, -0.124], 12);">London</a></li>
+      <li><a ng-click="shortcut([40.7259253, -73.9805603], 12);">New York</a></li>
+      <!-- <li><a ng-click="shortcut([48.858864, 2.346986], 12);">Paris</a></li> -->
+      <li><a ng-click="shortcut([40.4127118, -3.7034225], 12);">Madrid</a></li>
+      <li><a ng-click="shortcut([28.6457035, 77.2356033], 12);">Delhi</a></li>
+      <li><a ng-click="shortcut([-37.8171749, 144.9632263], 14);">Melbourne</a></li>
+      <li><a ng-click="shortcut([-41.2903189, 174.7790909], 15);">Wellington</a></li>
+    </ul>
   </section>
   <section id="searchbar">
     <form role="search">
       <div class="input-group">
-        <!-- <span class="input-group-addon"><i class="icon-search"></i></span> -->
-        <input type="text" ng-model="search" class="form-control" placeholder="Search" />      
+        <input type="text" ng-model="search" class="form-control" placeholder="Search" />
         <div class="input-group-btn">
           <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span ng-bind="dataset"></span>&nbsp;&nbsp;&nbsp;<span class="caret"></span></button>
           <ul class="dropdown-menu dropdown-menu-right" role="menu">
@@ -24,7 +32,7 @@
     <ul id="results">
       <li ng-repeat="result in results">
         <a ng-click="selectResult(result)">
-          <i class="glyphicon glyphicon-{{result.icon}}" /> 
+          <i class="glyphicon glyphicon-{{result.icon}}" />
           <span ng-bind-html-unsafe="result.htmltext"></span>
         </a>
         <div class="aside">
