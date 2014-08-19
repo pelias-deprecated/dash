@@ -12,6 +12,8 @@ app.controller( 'MapIndexController', function( $rootScope, $scope, PeliasGeoJso
     zoomControl: false,
     attributionControl: false,
     contextmenu: true,
+    center: [51.505, -0.124],
+    zoom: 12,
     contextmenuWidth: 140,
     contextmenuItems: [{
       text: 'Show coordinates',
@@ -121,35 +123,55 @@ app.controller( 'MapIndexController', function( $rootScope, $scope, PeliasGeoJso
     $rootScope.geobase = coords;
     
     $rootScope.$emit( 'geobase', $rootScope.geobase, zoom );
+    $rootScope.$emit( 'map.setView', [ Number( $rootScope.geobase[0] ).toFixed(7), Number( $rootScope.geobase[1] ).toFixed(7) ], zoom ); 
   }
-
-  var loc = $location.search().loc;
-  if (loc) {
-    var locArr = loc.split(",");
-    setMapCoords( [ locArr[1], locArr[0] ], locArr[2] );
-  } else {
-    navigator.geolocation.getCurrentPosition( function( pos ){
-      if( pos && pos.coords ){
-        setMapCoords( [ pos.coords.latitude, pos.coords.longitude ], 12 );
-      }
-    }, function(){
-      console.log( 'geolocation error', arguments );
-      setMapCoords();
-    });
-  }
-
+  // console.log("cookie" + $cookies.loc)
+  map.whenReady(function(){
+    var loc = $location.search().loc;
+    if (loc) {
+      console.log("loc triggree"+loc)
+      var locArr = loc.split(",");
+      // var cokLoc = $cookies.loc;
+      // setMapCoords( [ locArr[0], locArr[1] ], locArr[2] );
+      console.log(locArr)
+      // console.log(map.getCenter())
+      console.log("----------")
+      // if (cokLoc != loc) {
+        map.setView( [ locArr[0], locArr[1] ], locArr[2] );
+        // $cookies.loc = loc  
+      // }
+    } else {
+      console.log("no loc");
+      navigator.geolocation.getCurrentPosition( function( pos ){
+        if( pos && pos.coords ){
+          console.log(pos)
+          setMapCoords( [ pos.coords.latitude, pos.coords.longitude ], 12 );
+        }
+      }, function(){
+        console.log( 'geolocation error', arguments );
+        setMapCoords();
+      });
+    }
+  });
+  
   map.on('moveend', function () {
     var pos = map.getCenter();
-    setMapCoords([pos.lat, pos.lng], map._zoom);
+    console.log("mapend triggered")
+    $location.search({"loc": Number( pos.lat ).toFixed(7) + ',' + Number( pos.lng ).toFixed(7) + ',' + map.getZoom()});
+    // setMapCoords([pos.lat, pos.lng], map._zoom);
+    $rootScope.$emit( 'geobase', [ pos.lat, pos.lng ], map.getZoom() );
   });
 
   $rootScope.$on( 'map.setView', function( ev, geo, zoom ){
     map.setView( geo, zoom || 8 );
   });
 
-  $rootScope.$on( 'geobase', function( ev, geobase, zoom ){
-    $rootScope.$emit( 'map.setView', [ Number( geobase[0] ).toFixed(7), Number( geobase[1] ).toFixed(7) ], zoom ); 
-    $rootScope.$emit( 'geobasechanged', geobase, zoom );
-  });
+  // $rootScope.$on( 'geobase', function( ev, geobase, zoom ){
+  //   console.log(geobase);
+  //   // $rootScope.$emit( 'map.setView', geobase, zoom ); 
+  //   // console.log( Number( geobase[0] ).toFixed(7) + ',' + Number( geobase[1] ).toFixed(7) + ',' + zoom);
+  //   // $location.search({"loc": Number( geobase[0] ).toFixed(7) + ',' + Number( geobase[1] ).toFixed(7) + ',' + zoom});
+  //   $rootScope.$emit( 'geobasechanged', geobase, zoom );
+  // });
 
 });

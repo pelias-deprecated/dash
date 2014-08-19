@@ -15,12 +15,13 @@ app.controller( 'HeaderIndexController', function( $rootScope, $scope, $http ) {
 
   // handle clicking the location shorcuts
   $scope.shortcut = function( geo, zoom ){
+    $rootScope.$emit( 'map.setView', [ Number( geo[0] ).toFixed(7), Number( geo[1] ).toFixed(7) ], zoom ); 
     $rootScope.$emit( 'geobase', geo, zoom );
   }
 
   var databaseurl = 'http://'+document.domain+':9200/pelias/';
 
-  $rootScope.$on( 'geobasechanged', function( ev, geobase, zoom ){
+  $rootScope.$on( 'geobase', function( ev, geobase, zoom ){
     $scope.geobase = Number( geobase[1] ).toFixed(7) + ', ' + Number( geobase[0] ).toFixed(7);
     $scope.suggest(); // run suggester on map changes
   });
