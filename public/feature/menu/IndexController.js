@@ -11,4 +11,7 @@ app.controller( 'MenuIndexController', function( $rootScope, $scope, PeliasGeoJs
     PeliasGeoJsonLayerManager.toggle( layerName );
   }
 
+  $scope.show_layer_menu = function() {
+  	$("#layer_menu").slideToggle();
+  }
 });

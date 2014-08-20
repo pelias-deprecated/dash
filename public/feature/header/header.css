@@ -37,6 +37,7 @@
   letter-spacing: 0.18em;
   font-family: 'arial' sans-serif;
   left: 73px;
+  cursor: pointer;
 }
 
 #header p#mapzen-logo {
@@ -58,23 +59,17 @@
 }
 
 #header .shortcuts {
-  margin: 0;
-  padding: 0;
   position: absolute;
-  left: 205px;
-  top: 5px;
-  width: 100px;
+  left: 71px;
+  top: 55px;
 }
 
-#header .shortcuts li,
 #header .shortcuts li a {
-  margin: 0;
-  padding: 2px;
-  font-size: 9px;
-  line-height: 9px;
-  float: left;
-  width: 50px;
-  /*background-color: blue;*/
+  color: #888;
+}
+
+#header .shortcuts li a:hover {
+  color:#428bca;
 }
 
 #header #searchbar form {
