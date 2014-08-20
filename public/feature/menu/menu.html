@@ -1,18 +1,12 @@
 
-<div id="menu" data-ng-controller="MenuIndexController">
+<div data-ng-controller="MenuIndexController">
+  <div class="leaflet-control-locate leaflet-bar leaflet-control dropdown-trigger">
+    <a ng-click="show_layer_menu();" class="leaflet-bar-part leaflet-bar-part-single" title="GeoJSON layers">GeoJSON Layers</a>
+  </div>
 
-  <ul class="nav nav-pills nav-stacked">
-    <li>
-      <h5>GeoJSON Layers:</h5>
-      <div class="btn-group-vertical">
-        <button
-          data-ng-repeat="(key, value) in layers"
-          type="button"
-          class="btn btn-default"
-          data-ng-class="{disabled: value==null, active: value}" 
-          data-ng-click="toggle( key );">{{key}}</button>
-      </div>
+  <ul id="layer_menu" class="dropdown-menu bottom-up">
+    <li data-ng-class="{disabled: value==null, active: value}" data-ng-repeat="(key, value) in layers">
+      <a data-ng-click="toggle( key );">{{key}}</a>
     </li>
   </ul>
-
 </div>
