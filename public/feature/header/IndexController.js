@@ -22,6 +22,7 @@ app.controller( 'HeaderIndexController', function( $rootScope, $scope, $http ) {
   var databaseurl = 'http://'+document.domain+':9200/pelias/';
 
   $rootScope.$on( 'geobase', function( ev, geobase, zoom ){
+    $rootScope.geobase = geobase;
     $scope.geobase = Number( geobase[1] ).toFixed(7) + ', ' + Number( geobase[0] ).toFixed(7);
     $scope.suggest(); // run suggester on map changes
   });
