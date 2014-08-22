@@ -35,7 +35,7 @@ module.exports = function( req, res, next ){
 
 // Build elasticsearch query object
 function buildSuggestCommand( req )
-{
+{ 
   var cmd = {
     'pelias' : {
       'text' : req.query.input,
@@ -48,7 +48,7 @@ function buildSuggestCommand( req )
             'value': req.query.geobias.split(',').reverse().map( function( ll ){
               return Number( ll );
             }),
-            'precision': 2
+            'precision': req.query.zoom > 9 ? 3 : req.query.zoom > 7 ? 2 : 1
           }
         }
       }

@@ -23,6 +23,7 @@ app.controller( 'HeaderIndexController', function( $rootScope, $scope, $http ) {
 
   $rootScope.$on( 'geobase', function( ev, geobase, zoom ){
     $rootScope.geobase = geobase;
+    $rootScope.zoom = zoom;
     $scope.geobase = Number( geobase[1] ).toFixed(7) + ', ' + Number( geobase[0] ).toFixed(7);
     $scope.suggest(); // run suggester on map changes
   });
@@ -108,6 +109,7 @@ app.controller( 'HeaderIndexController', function( $rootScope, $scope, $http ) {
         input: $scope.search,
         datasets: $scope.queryDatasets.join(','),
         geobias: ( $rootScope.geobase || [] ).join(','),
+        zoom: $rootScope.zoom,
         size: 15
       },
       headers: { 'Accept': 'application/json' }
