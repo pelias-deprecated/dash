@@ -84,7 +84,6 @@ app.controller( 'HeaderIndexController', function( $rootScope, $scope, $http ) {
   $scope.search = '';
   $scope.results = [];
   $scope.currentText = '';
-  $scope.lastSuggest = 0;
   $scope.lastSearch = 0;
 
   $scope.selectResult = function( result ){
@@ -117,10 +116,6 @@ app.controller( 'HeaderIndexController', function( $rootScope, $scope, $http ) {
 
         // prevent showing suggestions when input is blank
         if( !$scope.search.length ) return;
-
-        // prevent older results loading over newer ones
-        if( data.date < $scope.lastSuggest ) return;
-        $scope.lastSuggest = data.date;
 
         $scope.results.length = 0;
         $scope.results = data.body.map( function( res ){
