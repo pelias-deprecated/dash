@@ -6,18 +6,25 @@ app.controller( 'MapIndexController', function( $rootScope, $scope, PeliasGeoJso
   function centerMap (e) { map.panTo(e.latlng); }
   function zoomIn (e) { map.zoomIn(); }
   function zoomOut (e) { map.zoomOut(); }
-
-  var cokLoc = $.cookie("loc");
-  var baseLat= 40.7259;
-  var baseLng= -73.9805;
-  var baseZm = 12;
-
-  if (cokLoc) {
-    var cokArr = cokLoc.split(",");
-    baseLat    = cokArr[0];
-    baseLng    = cokArr[1];
-    baseZm     = cokArr[2];
+  
+  // Helper Functions ( For encoding/decoding lat/lon/zoom values to a cookie and back )
+  function getLocStr(geo, zoom) { return Number( geo[0] ).toFixed(7) + ',' + Number( geo[1] ).toFixed(7) + ',' + zoom; }
+  function getLatLonZoom(string) {
+    var locArr = string.split(",");
+    return {
+      latitude: locArr[0],
+      longitude:locArr[1],
+      zoom:     locArr[2]
+    }
   }
+  
+  var cLoc   = $.cookie("loc");
+  var cPos   = getLatLonZoom(cLoc);
+
+  var baseLat= cLoc ? cPos.latitude  : 40.7259;
+  var baseLng= cLoc ? cPos.longitude : -73.9805;
+  var baseZm = cLoc ? cPos.zoom      : 12;
+
   // Init map
   var map = L.map( 'map', {
     zoomControl: false,
@@ -121,9 +128,6 @@ app.controller( 'MapIndexController', function( $rootScope, $scope, PeliasGeoJso
   // Manually add layer
   // map.addLayer( PeliasGeoJsonLayer( '/shapes/locality/{z}/{y}/{x}' ) );
 
-  // Center map
-  // map.setView( [ 51.505, -0.124 ], 12 ); // London
-  // map.setView( [ 40.75558, -74.00391 ], 8 ); // New York
 
   var setMapCoords = function(coords, zoom) {
     $rootScope.geobase = coords;
@@ -131,23 +135,19 @@ app.controller( 'MapIndexController', function( $rootScope, $scope, PeliasGeoJso
     $rootScope.$emit( 'map.setView', [ Number( $rootScope.geobase[0] ).toFixed(7), Number( $rootScope.geobase[1] ).toFixed(7) ], zoom ); 
   }
 
-  var getLocStr = function(geo, zoom) {
-    return Number( geo[0] ).toFixed(7) + ',' + Number( geo[1] ).toFixed(7) + ',' + zoom;
-  }
-
   map.whenReady(function(){
     var loc = $location.search().loc;
     if (loc) {
-      var locArr = loc.split(",");
-      if (loc!=cokLoc) {
-        $rootScope.$emit( 'map.setView', [ locArr[0], locArr[1] ], locArr[2] );
+      var pos = getLatLonZoom(loc);
+      if (loc!=cLoc) {
+        $rootScope.$emit( 'map.setView', [ pos.latitude, pos.longitude ], pos.zoom );
       }
-      $rootScope.$emit( 'geobase', [ locArr[0], locArr[1] ], locArr[2] );
+      $rootScope.$emit( 'geobase', [ pos.latitude, pos.longitude ], pos.zoom );
       $.cookie("loc", loc )
-    } else if (cokLoc) {
+    } else if (cLoc) {
       // do nothing, map is already set to baseLat, baseLng (which is equal to the cookie value in this case)
-      $rootScope.$emit( 'geobase', [ cokArr[0], cokArr[1] ], cokArr[2] );
-      $location.search({"loc":  getLocStr([ cokArr[0], cokArr[1] ], cokArr[2])});
+      $rootScope.$emit( 'geobase', [ cPos.latitude, cPos.longitude ], cPos.zoom );
+      $location.search({"loc":  getLocStr([ cPos.latitude, cPos.longitude ], cPos.zoom)});
     } else {
       navigator.geolocation.getCurrentPosition( function( pos ){
         if( pos && pos.coords ){
