@@ -25,12 +25,15 @@ app.configure(function(){
 });
 
 // Templating
-app.set( 'views', app.get( 'baseDir' ) + '/public' ); 
+app.set( 'views', app.get( 'baseDir' ) + '/public' );
 app.set( 'view engine', 'jade' );
 app.set( 'view options', { layout: false } );
 
 // Routes
-app.get( '/', function( req, res ){ res.render( 'index' ); });
+app.get( '/', function( req, res ){
+  res.header('Cache-Control','public,max-age=60');
+  res.render( 'index' );
+});
 
 // Suggest
 var suggestController = require('./controller/suggestController');
