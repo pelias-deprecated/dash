@@ -15,9 +15,9 @@ app.controller( 'HeaderIndexController', function( $rootScope, $scope, $http ) {
 
   // handle clicking the location shorcuts
   $scope.shortcut = function( geo, zoom ){
-    $rootScope.$emit( 'map.setView', [ Number( geo[0] ).toFixed(7), Number( geo[1] ).toFixed(7) ], zoom ); 
+    $rootScope.$emit( 'map.setView', [ Number( geo[0] ).toFixed(7), Number( geo[1] ).toFixed(7) ], zoom );
     $rootScope.$emit( 'geobase', geo, zoom );
-  }
+  };
 
   var databaseurl = 'http://'+document.domain+':9200/pelias/';
 
@@ -55,6 +55,8 @@ app.controller( 'HeaderIndexController', function( $rootScope, $scope, $http ) {
       return 'tower';
     } else if( type.match('neighborhood') ){
       return 'home';
+    } else if( type.match('street') ){
+      return 'road';
     }
     return 'map-marker';
   };
