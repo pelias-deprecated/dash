@@ -1,17 +1,37 @@
 
-app.controller( 'MapIndexController', function( $rootScope, $scope, PeliasGeoJsonLayerManager ) {
+app.controller( 'MapIndexController', function( $rootScope, $scope, PeliasGeoJsonLayerManager, $location ) {
 
   // Helper Functions ( For Context Menu )
   function showCoordinates (e) { alert( e.latlng ); }
   function centerMap (e) { map.panTo(e.latlng); }
   function zoomIn (e) { map.zoomIn(); }
   function zoomOut (e) { map.zoomOut(); }
+  
+  // Helper Functions ( For encoding/decoding lat/lon/zoom values to a cookie and back )
+  function getLocStr(geo, zoom) { return Number( geo[0] ).toFixed(7) + ',' + Number( geo[1] ).toFixed(7) + ',' + zoom; }
+  function getLatLonZoom(string) {
+    var locArr = string.split(",");
+    return {
+      latitude: locArr[0],
+      longitude:locArr[1],
+      zoom:     locArr[2]
+    }
+  }
+  
+  var cLoc   = $.cookie("loc");
+  var cPos   = getLatLonZoom(cLoc);
+
+  var baseLat= cLoc ? cPos.latitude  : 40.7259;
+  var baseLng= cLoc ? cPos.longitude : -73.9805;
+  var baseZm = cLoc ? cPos.zoom      : 12;
 
   // Init map
   var map = L.map( 'map', {
     zoomControl: false,
     attributionControl: false,
     contextmenu: true,
+    center: [baseLat, baseLng],
+    zoom: baseZm,
     contextmenuWidth: 140,
     contextmenuItems: [{
       text: 'Show coordinates',
@@ -108,46 +128,48 @@ app.controller( 'MapIndexController', function( $rootScope, $scope, PeliasGeoJso
   // Manually add layer
   // map.addLayer( PeliasGeoJsonLayer( '/shapes/locality/{z}/{y}/{x}' ) );
 
-  // Center map
-  // map.setView( [ 51.505, -0.124 ], 12 ); // London
-  // map.setView( [ 40.75558, -74.00391 ], 8 ); // New York
 
-  var setGeoBase = function( coords ){
-    setMapCoords(coords);
-    setMapView(15);
+  var setMapCoords = function(coords, zoom) {
+    $rootScope.geobase = coords;
+    $rootScope.$emit( 'geobase', $rootScope.geobase, zoom );
+    $rootScope.$emit( 'map.setView', [ Number( $rootScope.geobase[0] ).toFixed(7), Number( $rootScope.geobase[1] ).toFixed(7) ], zoom ); 
   }
 
-  var setMapCoords = function(coords) {
-    if( !coords ){
-      console.log( 'using default geolocation' );
-      $rootScope.geobase = [ 51.505, -0.124 ]; // London
+  map.whenReady(function(){
+    var loc = $location.search().loc;
+    if (loc) {
+      var pos = getLatLonZoom(loc);
+      if (loc!=cLoc) {
+        $rootScope.$emit( 'map.setView', [ pos.latitude, pos.longitude ], pos.zoom );
+      }
+      $rootScope.$emit( 'geobase', [ pos.latitude, pos.longitude ], pos.zoom );
+      $.cookie("loc", loc )
+    } else if (cLoc) {
+      // do nothing, map is already set to baseLat, baseLng (which is equal to the cookie value in this case)
+      $rootScope.$emit( 'geobase', [ cPos.latitude, cPos.longitude ], cPos.zoom );
+      $location.search({"loc":  getLocStr([ cPos.latitude, cPos.longitude ], cPos.zoom)});
+    } else {
+      navigator.geolocation.getCurrentPosition( function( pos ){
+        if( pos && pos.coords ){
+          setMapCoords( [ pos.coords.latitude, pos.coords.longitude ], 12 );
+        }
+      }, function(){
+        // do nothing, map is already set to baseLat, baseLng
+        console.log( 'geolocation error', arguments );
+      });
     }
-    else {
-      $rootScope.geobase = coords;
-    }
-    $rootScope.$emit( 'geobase', $rootScope.geobase );
-  }
-
-  var setMapView = function(zoom) {
-    map.setView( $rootScope.geobase, zoom || 15 ); // London
-  }
-  navigator.geolocation.getCurrentPosition( function( pos ){
-    if( pos && pos.coords ){
-      setGeoBase( [ pos.coords.latitude, pos.coords.longitude ] );
-    }
-  }, function(){
-    console.log( 'geolocation error', arguments );
-    setGeoBase();
   });
-
+  
   map.on('moveend', function () {
     var pos = map.getCenter();
-    setMapCoords([pos.lat, pos.lng]);
+    var locStr = getLocStr([pos.lat, pos.lng ], map.getZoom());
+    $location.search({"loc": locStr});
+    $.cookie("loc",  locStr);
+    $rootScope.$emit( 'geobase', [ pos.lat, pos.lng ], map.getZoom() );
   });
 
   $rootScope.$on( 'map.setView', function( ev, geo, zoom ){
-    // console.log( 'setView', geo, zoom || 8 );
     map.setView( geo, zoom || 8 );
-  })
+  });
 
 });
