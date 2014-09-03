@@ -2,6 +2,7 @@
 // send a reply that is capable of JSON, CORS and JSONP
 function cors( req, res, obj ){
   res.header('Charset','utf8');
+  res.header('Cache-Control','private,max-age=0,no-cache');
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET');
   res.header('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
@@ -29,4 +30,4 @@ function error( req, res, next, err ){
 module.exports = {
   cors: cors,
   error: error
-}
+};
