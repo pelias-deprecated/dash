@@ -35,7 +35,9 @@ module.exports = function( req, res, next ){
 
 // Build elasticsearch query object
 function buildSuggestCommand( req )
-{ 
+{
+  var z = Number( req.query.zoom );
+
   var cmd = {
     'pelias' : {
       'text' : req.query.input,
@@ -48,12 +50,13 @@ function buildSuggestCommand( req )
             'value': req.query.geobias.split(',').reverse().map( function( ll ){
               return Number( ll );
             }),
-            'precision': req.query.zoom > 9 ? 3 : req.query.zoom > 7 ? 2 : 1
+            // // commented out until they fix the precision bug in ES 1.3.3
+            'precision': 2 //z > 9 ? 3 : (z > 7 ? 2 : 1)
           }
         }
       }
     }
-  }
+  };
   // console.log( 'cmd', JSON.stringify( cmd, null, 2 ) );
   return cmd;
 }
