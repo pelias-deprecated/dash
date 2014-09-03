@@ -19,11 +19,11 @@ app.controller( 'MapIndexController', function( $rootScope, $scope, PeliasGeoJso
   }
   
   var cLoc   = $.cookie("loc");
-  var cPos   = getLatLonZoom(cLoc);
+  var cPos   = cLoc ? getLatLonZoom(cLoc) : { latitude: 40.7259, longitude: -73.9805, zoom: 12 };
 
-  var baseLat= cLoc ? cPos.latitude  : 40.7259;
-  var baseLng= cLoc ? cPos.longitude : -73.9805;
-  var baseZm = cLoc ? cPos.zoom      : 12;
+  var baseLat= cPos.latitude;
+  var baseLng= cPos.longitude;
+  var baseZm = cPos.zoom;
 
   // Init map
   var map = L.map( 'map', {
