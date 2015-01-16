@@ -1,9 +1,9 @@
+# DEPRECATED
+**Use our [new Pelias demo](https://github.com/pelias/demo) instead.**
 
 ### pelias-webview
 
 Load GeoJSON data from Pelias and display it on a leaflet map.
-
-NOTE: This is very early stage, please feel free to fork & contribute.
 
 ### Installation
 
